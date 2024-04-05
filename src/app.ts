@@ -3,7 +3,10 @@ import fastifyView from "@fastify/view";
 import ejs from "ejs";
 import path from "path";
 import fastifyStatic from "@fastify/static";
+import { setHeaders } from "./middlewares/headers";
 const app = fastify({ logger: true });
+
+app.addHook("onRequest", setHeaders);
 
 app.register(fastifyView, {
   engine: { ejs },
