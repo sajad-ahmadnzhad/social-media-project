@@ -1,0 +1,19 @@
+{
+  "name": "social-backend",
+  "version": "1.0.0",
+  "main": "./src/server.ts",
+  "author": "'sajad'",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./src/server.ts"
+  },
+  "dependencies": {
+    "@fastify/static": "^7.0.3",
+    "@fastify/view": "^9.0.0",
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^20.12.4",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "fastify": "^4.26.2"
+  }
+}
