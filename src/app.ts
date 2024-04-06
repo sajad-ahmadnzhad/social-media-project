@@ -4,6 +4,7 @@ import ejs from "ejs";
 import path from "path";
 import fastifyStatic from "@fastify/static";
 import { setHeaders } from "./middlewares/headers";
+import errorHandler from "./middlewares/errorHandler";
 const app = fastify({ logger: true });
 
 app.addHook("onRequest", setHeaders);
@@ -34,5 +35,8 @@ app.register(fastifyStatic, {
 });
 
 app.get("/", (req, reply) => reply.view("index.ejs"));
+
+// TODO: Needed Feature
+app.setErrorHandler(errorHandler);
 
 export default app;
