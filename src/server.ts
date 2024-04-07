@@ -9,7 +9,7 @@ const productionMode = process.env.NODE_ENV == "production";
 if (!productionMode) {
   config({ path: path.join(__dirname, ".env") });
 }
-// * Start Server
+//* Start Server
 const start = async () => {
   try {
     await app.listen({ port: PORT });
@@ -17,32 +17,35 @@ const start = async () => {
     app.log.error(error);
   }
 };
-// * Connect to DB
-const connectToDB = async () => {
-  try {
-    const { USER, PASS, HOST, DATABASE } = process.env;
+//* Connect to DB
+const connectToDB = () => {
+  const { USER, PASS, HOST, DATABASE } = process.env;
 
-    const connection = new Sequelize({
-      username: USER,
-      password: PASS,
-      host: HOST,
-      database: DATABASE,
-      dialect: "mysql",
-      logging: false,
-    });
+  const connection = new Sequelize({
+    username: USER,
+    password: PASS,
+    host: HOST,
+    database: DATABASE,
+    dialect: "mysql",
+    logging: false,
+  });
 
-    await connection.authenticate();
-    console.log("Connect to database successfully");
-  } catch (error) {
-    console.log("Connect to database error");
-    app.log.error(error);
-    process.exit(1)
-  }
+  (async () => {
+    try {
+      await connection.authenticate();
+      console.log("Connect to database successfully");
+    } catch (error) {
+      console.log("Connect to database error");
+      app.log.error(error);
+      process.exit(1);
+    }
+  })();
+  return connection
 };
 
-const run = async () => {
+const run = (): Sequelize => {
   start();
-  await connectToDB();
+ return connectToDB()
 };
 
-run();
+export default run();
